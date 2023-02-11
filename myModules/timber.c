@@ -2,7 +2,7 @@
 #include <linux/module.h>
 
 //millisecond
-#define TIMEOUT 5000
+#define TIMEOUT 10000
 
 int times = 0;
 
@@ -14,7 +14,9 @@ void timer_callback(struct timer_list *timer)
 	printk(KERN_INFO "Callling timer_callback() %i-th times", ++times);
 
 	// Re-enable the timer which will make this as periodic timer */
-	mod_timer(&chr_timer,msecs_to_jiffies(TIMEOUT));
+	mod_timer(&chr_timer,jiffies + msecs_to_jiffies(TIMEOUT));
+
+	printk(KERN_ERR "In timer_callback, jiffies is %i, msecs_to_jiffies(TIMEOUT) is %i", jiffies, msecs_to_jiffies(TIMEOUT));
 }
  
 static int __init chr_driver_init(void)
@@ -27,6 +29,8 @@ static int __init chr_driver_init(void)
 
 	//setup the timer interval to base on TIMEOUT Macro
 	mod_timer(&chr_timer,jiffies + msecs_to_jiffies(TIMEOUT));
+
+	printk(KERN_ERR "In chr_driver_init, jiffies is %i, msecs_to_jiffies(TIMEOUT) is %i", jiffies, msecs_to_jiffies(TIMEOUT));
 	
 	return 0;
 }
