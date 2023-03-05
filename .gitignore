@@ -1,12 +1,4 @@
 *.ko
-<<<<<<< HEAD
-*.mod
-*.mod.c
-*.mod.o
-*.o
-Module.symvers
-modules.order
-=======
 *.mod.o
 *.order
 *.mod
@@ -15,9 +7,7 @@ modules.order
 *.mod.c
 .Module.symvers.cmd
 .modules.order.cmd
-test.c
 .test.ko.cmd
 .test.mod.cmd
 .test.mod.o.cmd
 .test.o.cmd
->>>>>>> 24d02aababb25e6f440b53bcb555d8dc0d682fa0
