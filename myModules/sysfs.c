@@ -51,7 +51,7 @@ void __exit chr_driver_exit(void)
 
 module_init(chr_driver_init);
 module_exit(chr_driver_exit);
- 
+
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("TechoGenius Academy");
 MODULE_DESCRIPTION("Character Device Driver using Interrupts");
