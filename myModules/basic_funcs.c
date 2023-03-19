@@ -3,6 +3,7 @@
 #include <asm/current.h>
 #include <linux/sched.h>
 #include <linux/version.h>
+#include <linux/interrupt.h>
 
 #define UTS_RELEASE "2.6.10"
 
@@ -16,6 +17,8 @@ module_param(howmany, int, S_IRUGO);
 module_param_array(nums, int, &n_nums, S_IRUGO);
 
 static int hello(void) {
+	int i;
+
     printk(KERN_INFO "UTS_RELEASE: %s", UTS_RELEASE);
     printk(KERN_INFO "LINUX VERSION: %i", LINUX_VERSION_CODE);
     printk(KERN_INFO "KERNEL VERSION: %i", KERNEL_VERSION(2, 6, 10));
@@ -25,16 +28,16 @@ static int hello(void) {
 
     printk(KERN_ERR "The number of IRQ is %i", NR_IRQS);
 
-    for(int i=0; i<howmany; ++i) {
+    for(i=0; i<howmany; ++i) {
         printk(KERN_INFO "whom is %s\n", whom);
     }
 
-    for(int i=0; i<8; ++i) {
+    for(i=0; i<8; ++i) {
         printk(KERN_INFO "para[%d] : %d", i, nums[i]);
     }
     printk(KERN_INFO "\n");
 
-    for(int i=0; i<n_nums; ++i) {
+    for(i=0; i<n_nums; ++i) {
         printk(KERN_INFO "para[%d] : %d", i, nums[i]);
     }
     printk(KERN_INFO "\n");
