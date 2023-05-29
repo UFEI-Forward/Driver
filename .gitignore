@@ -11,3 +11,4 @@
 .test.mod.cmd
 .test.mod.o.cmd
 .test.o.cmd
+test.c
