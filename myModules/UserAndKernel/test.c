@@ -11,34 +11,57 @@ static struct class *dev_class;
 /**********************chr_op function defination*****************/ 
 static ssize_t chr_read(struct file *filp,char __user *buf, size_t len, loff_t *off)
 {
-        printk(KERN_INFO "Read function\n");
-        return 0;
+    char str[] = "Hi, I'm message from Kernel!";
+    unsigned long ret;
+
+    ret = copy_to_user(buf, str, sizeof(str));
+    if(ret != 0) {
+        printk(KERN_INFO "Failed in copying data from kernel space to user space!");
+    }
+
+    printk(KERN_INFO "Read function\n");
+    return 0;
 }
+
 static ssize_t chr_write(struct file *filp,const char __user *buf, size_t len, loff_t *off)
 {
-        printk(KERN_INFO "Write Function\n");
-        return 0;
+    char str[20] = "";
+    unsigned long ret;
+
+    printk(KERN_ERR "chr_write: Len is %zu\n", len);
+    
+    ret = copy_from_user(str, buf, 20);
+    printk(KERN_ERR "%s\n", str);
+    if(ret != 0) {
+        printk(KERN_INFO "Failed in copying data from kernel space to user space!");
+    }
+
+    printk(KERN_INFO "Write Function\n");
+
+    return 0;
 }
 
 static int chr_open(struct inode *inode, struct file *file)
 {
-        printk(KERN_INFO "Device File Opened...!!!\n");
-        return 0;
+    printk(KERN_INFO "Device File Opened...!!!\n");
+
+    return 0;
 }
  
 static int chr_release(struct inode *inode, struct file *file)
 {
-        printk(KERN_INFO "Device File Closed...!!!\n");
-        return 0;
+    printk(KERN_INFO "Device File Closed...!!!\n");
+    
+    return 0;
 }
 
 static struct file_operations fops =
 {
-        .owner          = THIS_MODULE,
-        .read           = chr_read,
-        .write          = chr_write,
-        .open           = chr_open,
-        .release        = chr_release,
+    .owner     = THIS_MODULE,
+    .read      = chr_read,
+    .write     = chr_write,
+    .open      = chr_open,
+    .release   = chr_release,
 };
 
 static int __init chr_driver_init(void)

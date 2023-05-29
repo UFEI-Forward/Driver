@@ -12,15 +12,17 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    int ret = 0;
     char buf[30];
-    ret = read(fd, buf, 30);
+    int ret = 0;
+    ret = read(fd, buf, sizeof(buf));
     if(ret == -1) {
         printf("Failed in reading file!\n");
         return -1;
     }
+    printf("%s\n", buf);
 
-    ret = write(fd, buf, 30);
+    char buf2[] = "I'm the info from user space!";
+    ret = write(fd, buf2, sizeof(buf2));
     if(ret == -1) {
         printf("Failed in writing file!\n");
         return -1;
