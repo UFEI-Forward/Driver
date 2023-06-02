@@ -54,12 +54,16 @@ static struct file_operations fops =
         .release        = etx_release,
 };
 
+static int num = 3;
+
 /*
 ** This function will be called when we open the Device file
 */
 static int etx_open(struct inode *inode, struct file *file)
 {
         pr_info("Device File Opened...!!!\n");
+        file->private_data = &num;
+        
         return 0;
 }
 
@@ -68,7 +72,9 @@ static int etx_open(struct inode *inode, struct file *file)
 */
 static int etx_release(struct inode *inode, struct file *file)
 {
+        printk(KERN_INFO "nums is %d\n", *((int *)file->private_data));
         pr_info("Device File Closed...!!!\n");
+
         return 0;
 }
 
